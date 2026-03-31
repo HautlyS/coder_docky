@@ -1,0 +1,9 @@
+{
+  "region_config": {
+    "preferredInferenceNode": {
+      "endpoint": "https://api1.qoder.sh",
+      "latency": 0
+    },
+    "fallbackIpMap": {}
+  }
+}
