@@ -68,7 +68,8 @@ RUN export NVM_DIR="$HOME/.nvm" \
 RUN corepack enable pnpm
 
 # Setup pnpm and add its global bin to PATH
-RUN pnpm setup && echo 'export PNPM_HOME="/root/.local/share/pnpm/bin"' >> /root/.bashrc
+RUN mkdir -p /root/.local/share/pnpm/bin \
+    && pnpm setup
 ENV PATH="/root/.local/share/pnpm/bin:${PATH}"
 ENV PNPM_HOME="/root/.local/share/pnpm/bin"
 
