@@ -46,12 +46,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Download and install Google Chrome
-RUN wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && dpkg -i /tmp/chrome.deb || apt-get -f install -y \
-    && rm /tmp/chrome.deb
 
-# Install nvm (Node Version Manager)
+Install nvm (Node Version Manager)
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
 
 # Set shell for pnpm
@@ -79,16 +75,12 @@ RUN pnpm add -g @qoder-ai/qodercli@0.1.37 \
     && pnpm add -g @playwright/mcp \
     && pnpm add -g npm-check-updates
 
-# Install Kiro CLI
-RUN curl -fsSL https://cli.kiro.dev/install | bash
 
-# Add kiro to PATH
-ENV PATH="/root/.local/bin:$PATH"
 
 # Configure Git globally
 RUN git config --global user.email "user@example.com" \
     && git config --global user.name "Developer" \
-    && git config --global init.defaultBranch main
+    && git config --global init.defaultBranch master
 
 # Create working directory
 WORKDIR /home/workspace
