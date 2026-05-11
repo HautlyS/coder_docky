@@ -13,14 +13,20 @@ mkdir -p "$CONFIG_DIR" "$CONFIG_CLI_DIR"
 
 if [ $# -eq 0 ]; then
     # Interactive - needs TTY
-    exec docker run --rm -it \
-        -v "$CONFIG_DIR:/root/.qoder" \
-        -v "$CONFIG_CLI_DIR:/root/.qoder-cli" \
-        -v "$WORKDIR:/home/workspace" \
-        -w /home/workspace \
-        "$IMAGE"
+    if [ -t 0 ]; then
+        exec docker run --rm -it \
+            -v "$CONFIG_DIR:/root/.qoder" \
+            -v "$CONFIG_CLI_DIR:/root/.qoder-cli" \
+            -v "$WORKDIR:/home/workspace" \
+            -w /home/workspace \
+            "$IMAGE"
+    else
+        echo "Error: Interactive mode requires a TTY"
+        echo "Usage: q 'your prompt'  (for non-interactive use)"
+        exit 1
+    fi
 else
-    # Pass args directly
+    # Pass args directly - non-interactive, no TTY needed
     exec docker run --rm \
         -v "$CONFIG_DIR:/root/.qoder" \
         -v "$CONFIG_CLI_DIR:/root/.qoder-cli" \
