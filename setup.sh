@@ -13,8 +13,10 @@ TEMP_DIR="$(mktemp -d)"
 cd "$TEMP_DIR"
 
 echo "[1/5] Downloading files..."
-curl -fsSL "$REPO_URL/Dockerfile" -o Dockerfile || { echo "ERROR: Failed to download Dockerfile"; exit 1; }
-curl -fsSL "$REPO_URL/q" -o q || { echo "ERROR: Failed to download q"; exit 1; }
+echo "  Downloading from: $REPO_URL/Dockerfile"
+curl -fsSL "$REPO_URL/Dockerfile" -o Dockerfile || { echo "ERROR: Failed to download Dockerfile from $REPO_URL/Dockerfile"; exit 1; }
+echo "  Downloading from: $REPO_URL/q"
+curl -fsSL "$REPO_URL/q" -o q || { echo "ERROR: Failed to download q from $REPO_URL/q"; exit 1; }
 chmod +x q
 
 # Verify downloads
