@@ -68,10 +68,10 @@ RUN export NVM_DIR="$HOME/.nvm" \
 RUN corepack enable pnpm
 
 # Setup pnpm and add its global bin to PATH
-RUN mkdir -p /root/.local/share/pnpm/bin \
+RUN mkdir -p /root/.local/share/pnpm \
     && pnpm setup
 ENV PATH="/root/.local/share/pnpm/bin:${PATH}"
-ENV PNPM_HOME="/root/.local/share/pnpm/bin"
+ENV PNPM_HOME="/root/.local/share/pnpm"
 
 # Install global packages
 RUN pnpm add -g @qoder-ai/qodercli@0.1.37 \
