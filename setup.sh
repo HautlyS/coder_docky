@@ -8,14 +8,22 @@ echo "🚀 Qoder CLI Docker Setup"
 echo "====================="
 
 # CONFIG: Change these for your repo
-REPO_URL="${REPO_URL:-https://raw.githubusercontent.com/HautlyS/coder_docky/main}"
+REPO_URL="${REPO_URL:-https://raw.githubusercontent.com/HautlyS/coder_docky/master}"
 TEMP_DIR="$(mktemp -d)"
 cd "$TEMP_DIR"
 
 echo "[1/5] Downloading files..."
-curl -sSL "$REPO_URL/Dockerfile" -o Dockerfile
-curl -sSL "$REPO_URL/q" -o q
+curl -fsSL "$REPO_URL/Dockerfile" -o Dockerfile || { echo "ERROR: Failed to download Dockerfile"; exit 1; }
+curl -fsSL "$REPO_URL/q" -o q || { echo "ERROR: Failed to download q"; exit 1; }
 chmod +x q
+
+# Verify downloads
+if [ ! -s Dockerfile ] || [ ! -s q ]; then
+    echo "ERROR: Downloaded files are empty"
+    exit 1
+fi
+
+echo "  Downloaded: $(wc -l < Dockerfile) lines in Dockerfile"
 
 # Install Docker if not present
 if ! command -v docker &> /dev/null; then
@@ -27,6 +35,8 @@ if ! command -v docker &> /dev/null; then
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
     sudo apt-get update
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+else
+    echo "[2/5] Docker already installed"
 fi
 
 echo "[3/5] Building Docker image..."
