@@ -74,10 +74,10 @@ ENV PATH="/root/.local/share/pnpm/bin:${PATH}"
 ENV PNPM_HOME="/root/.local/share/pnpm"
 
 # Install global packages
-RUN pnpm add -g @qoder-ai/qodercli@0.1.37 \
-    && pnpm add -g @kilocode/cli \
-    && pnpm add -g @playwright/mcp \
-    && pnpm add -g npm-check-updates
+RUN npm install -g @qoder-ai/qodercli@0.1.37 \
+    && npm install -g @kilocode/cli \
+    && npm install -g @playwright/mcp \
+    && npm install -g npm-check-updates
 
 # Install Kiro CLI
 RUN curl -fsSL https://cli.kiro.dev/install | bash
