@@ -70,6 +70,8 @@ RUN corepack enable pnpm
 # Setup pnpm
 RUN pnpm setup
 
+RUN source ~/.bashrc
+
 # Install global packages
 RUN pnpm add -g @qoder-ai/qodercli@0.1.37 \
     && pnpm add -g @kilocode/cli \
